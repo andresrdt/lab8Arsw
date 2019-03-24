@@ -6,38 +6,54 @@
 package edu.eci.services;
 
 import edu.eci.models.Car;
+import edu.eci.persistences.repositories.ICarRepository;
 import edu.eci.services.contracts.ICarServices;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 /**
  *
  * @author Andres
  */
-public class CarServices implements ICarServices{
+@Component
+public class CarServices implements ICarServices {
+
+    @Autowired
+    @Qualifier("CarMemoryRepository")
+    private ICarRepository carRepository;
 
     @Override
     public List<Car> list() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return carRepository.findAll();
     }
 
     @Override
     public Car create(Car car) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (null == car.getLicencePlate()) {
+            throw new RuntimeException("Licence invalid");
+        } else if (carRepository.find(car.getLicencePlate()) != null) {
+            throw new RuntimeException("The Licence exists");
+        } else {
+            carRepository.save(car);
+        }
+        return car;
     }
 
     @Override
     public Car get(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return carRepository.getCarByLicence(name);
     }
 
     @Override
     public void update(Car car) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        carRepository.update(car);
     }
 
     @Override
     public void delete(Car car) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        carRepository.delete(car);
     }
-    
+
 }

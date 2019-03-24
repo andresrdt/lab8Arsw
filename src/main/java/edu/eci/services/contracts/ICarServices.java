@@ -8,11 +8,13 @@ package edu.eci.services.contracts;
 import edu.eci.models.Car;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.stereotype.Service;
 
 /**
  *
  * @author Andres
  */
+@Service
 public interface ICarServices {
     List<Car> list();
     Car create(Car car);
