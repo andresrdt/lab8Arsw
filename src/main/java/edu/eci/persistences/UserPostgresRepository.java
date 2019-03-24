@@ -66,7 +66,7 @@ public class UserPostgresRepository implements IUserRepository {
 
     @Override
     public void update(User entity) {
-
+            
     }
 
     @Override
