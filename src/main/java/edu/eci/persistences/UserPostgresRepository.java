@@ -30,25 +30,36 @@ public class UserPostgresRepository implements IUserRepository {
 
     @Override
     public User getUserByUserName(String userName) {
-        return null;
+        String query = "SELECT * FROM users WHERE name ='+userName+'";
+        try (Connection connection = dataSource.getConnection()) {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            User user = new User();
+            user.setName(rs.getString("name"));
+            user.setId(UUID.fromString(rs.getString("id")));
+            return user;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public List<User> findAll() {
         String query = "SELECT * FROM users";
-        List<User> users=new ArrayList<>();
+        List<User> users = new ArrayList<>();
 
-        try(Connection connection = dataSource.getConnection()){
+        try (Connection connection = dataSource.getConnection()) {
             Statement stmt = connection.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()){
+            while (rs.next()) {
                 User user = new User();
                 user.setName(rs.getString("name"));
                 user.setId(UUID.fromString(rs.getString("id")));
                 users.add(user);
             }
             return users;
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             throw new RuntimeException(e);
         }
@@ -56,7 +67,20 @@ public class UserPostgresRepository implements IUserRepository {
 
     @Override
     public User find(UUID id) {
-        return null;
+        String query = "SELECT * FROM users WHERE id ='id'";
+
+        try (Connection connection = dataSource.getConnection()) {
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            User user = new User();
+            user.setName(rs.getString("name"));
+            user.setId(UUID.fromString(rs.getString("id")));
+            return user;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -66,7 +90,7 @@ public class UserPostgresRepository implements IUserRepository {
 
     @Override
     public void update(User entity) {
-            
+
     }
 
     @Override

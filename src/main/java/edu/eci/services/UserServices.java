@@ -14,7 +14,8 @@ import java.util.UUID;
 public class UserServices implements IUserServices{
 
     @Autowired
-    @Qualifier("UserMemoryRepository")
+    //@Qualifier("UserMemoryRepository")
+    @Qualifier("UserPostgresRepository")
     private IUserRepository userRepository;
 
     @Override
