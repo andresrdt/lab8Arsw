@@ -22,7 +22,7 @@ import java.util.UUID;
 @Component
 @Qualifier("UserPostgresRepository")
 public class UserPostgresRepository implements IUserRepository {
-    private String dbUrl = "postgres://nylcasefkljgdu:c432d8924c680a77808241d131768bb3220cabf5ea1142853a08d9d13f978db2@ec2-23-23-195-205.compute-1.amazonaws.com:5432/de17vsdid3stge";
+    private String dbUrl = "jdbc:postgres://nylcasefkljgdu:c432d8924c680a77808241d131768bb3220cabf5ea1142853a08d9d13f978db2@ec2-23-23-195-205.compute-1.amazonaws.com:5432/de17vsdid3stge";
     @Autowired
     private DataSource dataSource;
     @Override
